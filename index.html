@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#2d6cdf">
+    <title>My Amauta v0.1.2-alpha</title>
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="manifest" href="./manifest.json">
+    
+    
+</head>
+<body>
+    <div class="app">
+    
+    <h1>My Amauta</h1>
+
+<section class="asistencia">
+        
+        <div>
+        <h2>Fecha de Hoy</h2>
+
+        <button id="diaAnterior">◀</button>
+        <input type="date" id="inputFecha">
+        <button id="diaSiguiente">▶</button> </div>
+
+        
+
+        <div><h2>Seleccionar fecha para cacular faltas y asistencias</h2> desde
+        <input type="date" id="inputFechaInicio"></div> hasta <input type="date" id="inputFechaFin">
+        
+
+        <div><h2>Alumnos en el curso</h2>
+            <p>Lista Alumnos del <span id="fechaSel">...</span></p>
+
+        <ul id="listaAlumnos" >
+            <!-- Lista de alumnos se generara aqui -->
+        </ul></div>
+
+    </section>
+
+
+    <section>
+        <h2>Ingresar alumno</h2>
+        <div>
+            <label for="inputNombres">Nombres Alumno</label>
+            <input type="text" id="inputNombres">  <br>
+
+            <label for="inputApellidos">Apellidos Alumno</label>
+            <input type="text" id="inputApellidos"><br>
+
+            <button type="button" id="botonAgregar">Agregar</button>
+        </div>
+
+
+    <!--Aqui ingresara los alumnos y cada que seleccione agregar se mostrata en una lista en la parte alumnos de la seccion asistencia -->
+    </section>
+
+     <section>
+        <p>Total Alumnos: <span id="totalAlumnos">0</span></p>
+         <!--  Ver asistencias total de alumnos y asistencias asi como clases totales y faltantes-->
+
+    </section>
+    
+    <button onclick="vaciarAlumnos()">Vaciar alumnos</button>
+    <button onclick="vaciarAsistencias()">Vaciar asistencias</button>
+
+</div>
+</body>
+    <script src="./amauta.js"></script>
+</html>
