@@ -28,7 +28,10 @@ transition: background 0.20s ease;
   background: #d2d2d6d3;
 }
 
-
+h3 {
+  text-align: center;
+  color: #0000ffd3;
+}
 
 
 input[type="checkbox"]{

@@ -2,6 +2,9 @@
 /* JavaScript code for managing students in My Amauta application */
 
 
+
+
+
 let alumnos = JSON.parse(localStorage.getItem("alumnos"))||[/*array de estudiantes*/
     ]
 
@@ -12,6 +15,77 @@ let asistencias = JSON.parse(localStorage.getItem("asistencias"))||[/*array de a
 let alumnoId = alumnos.length > 0
     ? alumnos[alumnos.length - 1].id + 1
     : 1 //id autoaumentable para cada alumno nuevo usando el id del ultimo alumno en el array +1 o 1 si no hay alumnos
+
+
+let grados = [
+ "Tercero",
+ "Cuarto",
+ "Quinto",
+ "Sexto"
+]
+
+
+
+
+function cargarGrados() {
+
+ const select = document.getElementById("selectGrado")
+
+ select.innerHTML = ""
+
+ for (let grado of grados) {
+
+  const option = document.createElement("option")
+
+  option.value = grado
+  option.textContent = grado
+
+  select.appendChild(option)
+
+ }
+
+}
+
+cargarGrados()
+
+
+document.getElementById("inputFechaInicio")
+.addEventListener("change", function(){
+
+  const fechaInicio = this.value
+  localStorage.setItem("fechaInicio", fechaInicio)
+
+})
+
+document.getElementById("inputFechaFin")
+.addEventListener("change", function(){
+
+  const fechaFin = this.value
+  localStorage.setItem("fechaFin", fechaFin)
+
+})
+
+
+function cargarFechasGuardadas(){
+
+  const fechaInicio = localStorage.getItem("fechaInicio")
+  const fechaFin = localStorage.getItem("fechaFin")
+
+  if(fechaInicio){
+    document.getElementById("inputFechaInicio").value = fechaInicio
+  }
+
+  if(fechaFin){
+    document.getElementById("inputFechaFin").value = fechaFin
+  }
+
+}
+
+
+cargarFechasGuardadas()
+
+
+
 
                                     /* FUNCION DE NAVEGACION DE FECHAS */
 document.getElementById("diaAnterior").addEventListener("click", function(){ //Agrega un event listener al boton de diaAnterior para cambiar la fecha seleccionada al dia anterior y actualizar la lista de alumnos
@@ -40,10 +114,36 @@ document.getElementById("diaSiguiente").addEventListener("click", function(){
 })
 
 
+
+
+                                        /*mostrar fecha */
+  function mostrarFechaBonita(fecha){
+
+  const fechaObj = new Date(fecha)
+
+  const opciones = {
+    weekday: "long",
+    day: "numeric",
+    month: "long"
+  }
+
+  let texto = fechaObj.toLocaleDateString("es-ES", opciones)
+
+  return texto.charAt(0).toUpperCase() + texto.slice(1)
+  
+
+}
+
                                               /* FUNCION DE SELECCION DE FECHA */
     
     document.getElementById("inputFecha")
   .addEventListener("change", renderAlumnos) /*Escucha el cambio en el input de fecha y llama a la funcion renderAlumnos para actualizar la lista de alumnos*/
+
+                                              /* FUNCION DE SELECCION DE GRADO */
+
+  document
+.getElementById("selectGrado")
+.addEventListener("change", renderAlumnos) /*Escucha el cambio en el select de grado y llama a la funcion renderAlumnos para actualizar la lista de alumnos segun el grado seleccionado*/
 
                                                     /* AGREGAR ALUMNOS*/
 
@@ -55,6 +155,8 @@ function agregarAlumno() { /*funcion para agregar alumnos */
     const nombres = document.getElementById("inputNombres").value .trim() /*Busca el elemento InputNombres en el html y extrae sus datos de ahi */
 
     const apellidos = document.getElementById("inputApellidos").value .trim() /*Busca el elemento InputApellidos en el html y extrae sus datos de ahi */
+
+    const grado = document.getElementById("selectGrado").value /*Busca el elemento selectGrado en el html y extrae sus datos de ahi */
 
     if (nombres === '' || apellidos === '') { /*Comprueba si los campos nombre y apellidos ademas de la fecha estan vacios */
 
@@ -68,6 +170,7 @@ const alumno = { /*Crea el object del alumno */
     id: alumnoId++, /*id autoaumentable */
     nombres: nombres, /*extrae datos de la var nombres */
     apellidos: apellidos, /*extrae datos de la var apellidos */
+    grado: grado /*extrae datos de la var grado */
     
 }
  
@@ -102,24 +205,42 @@ const listaAlumnos = document.getElementById("listaAlumnos") /*Busca el elemento
 
 const fechaSelect = document.getElementById("inputFecha").value /*Busca el elemento inputFecha en el html y extrae sus datos de ahi */
 const fechaSpan = document.getElementById("fechaSel") /*Busca el elemento fechaSel en el html */
+const gradoSeleccionado =
+document.getElementById("selectGrado").value
 
-if (fechaSelect) { //
-    fechaSpan.textContent = fechaSelect
+
+
+
+
+
+if (fechaSelect || gradoSeleccionado) { //
+    fechaSpan.textContent = `${mostrarFechaBonita(fechaSelect)} - ${gradoSeleccionado} ` /*Muestra la fecha seleccionada y el grado seleccionado en el span de fechaSel usando la funcion mostrarFechaBonita para darle formato a la fecha */
   } else {
     fechaSpan.textContent = "...  "
+    
   }
+
+  
 
 
     listaAlumnos.innerHTML = '' /*Limpia la lista de alumnos para evitar duplicarla */
 
+    let contador = 0 
+
     for (let alumno of alumnos) {/*recorre cada object "alumno" ingresado en el array alumnos */
+
+        if (alumno.grado !== gradoSeleccionado) {
+         continue
+        }
+
+        contador++ /*contador para mostrar el total de alumnos en el grado seleccionado*/
         const li = document.createElement("li") /*Crea un elemento de lista <li>  */
         const inputAsis = document.createElement("input") 
         const details = document.createElement("input") //Crea un elemento de input para mostrar los detalles del alumno al hacer click en el nombre del alumno
         const texto = document.createElement("span") 
 
                                                   /*contenidos */
-        texto.textContent = `${alumno.id} - ${alumno.nombres} ${alumno.apellidos}` /*Define el contenido de texto con el id, nombres y apellidos del alumno actual */
+        texto.textContent = `• ${alumno.apellidos.toUpperCase()} ${alumno.nombres} ` /*Define el contenido de texto con el id, nombres y apellidos del alumno actual */
         inputAsis.type = "checkbox" /*Define el tipo de input como checkbox */
           details.type = "button" //Define el tipo de input como button
         details.value = "Detalles" //Define el valor del button como "Detalles"
@@ -157,27 +278,7 @@ const alumnoAsist = asistencias.find(a => a.alumnoId === alumno.id && a.fecha ==
             localStorage.setItem("asistencias", JSON.stringify(asistencias)) /*Guarda el array asistencias actualizado en localStorage como string JSON */
         })
 
-                                                    /* FUNCION DE DETALLES DEL ALUMNO */
-function contarDiasClase(inicio, fin) {
 
-  let fechaActual = new Date(inicio)
-  const fechaFinal = new Date(fin)
-
-  let diasClase = 0
-
-  while (fechaActual <= fechaFinal) {
-
-    const dia = fechaActual.getDay()
-
-    if (dia !== 0 && dia !== 6) {
-      diasClase++
-    }
-
-    fechaActual.setDate(fechaActual.getDate() + 1)
-  }
-
-  return diasClase
-}
                                                   /* FUNCION DE DETALLES DEL ALUMNO */
 
         
@@ -207,14 +308,14 @@ function contarDiasClase(inicio, fin) {
   const falto = diasTotal - asistio
 
   alert(
-`Alumno: ${alumno.nombres} ${alumno.apellidos}
-
+`
 Periodo:
-${fechaInicio} → ${fechaFin}
-
-Clases totales: ${diasTotal}
-Asistencias: ${asistio}
-Faltas: ${falto}`
+${fechaInicio.split("-").reverse().join("/")} → ${fechaFin.split("-").reverse().join("/")} 
+ALUMNO: ${alumno.apellidos} ${alumno.nombres} 
+GRADO: ${alumno.grado}
+CLASES TOTALES: ${diasTotal}
+ASISTENCIAS: ${asistio}
+FALTAS: ${falto}`
   )       
 
         })
@@ -227,9 +328,37 @@ Faltas: ${falto}`
         
     }
 
-      document.getElementById("totalAlumnos").textContent = alumnos.length /*cambia el contenido de totalAlumnos a la cantidad objects en el array Alumnos, osea la cantidad de alumnos*/
+
+
+    
+
+    document.getElementById("totalAlumnos").textContent = contador /*cambia el contenido de totalAlumnos a la cantidad objects en el array Alumnos, osea la cantidad de alumnos*/
 
 }
+
+                                                    /* FUNCION DE DETALLES DEL ALUMNO */
+function contarDiasClase(inicio, fin) {
+
+  let fechaActual = new Date(inicio)
+  const fechaFinal = new Date(fin)
+
+  let diasClase = 0
+
+  while (fechaActual <= fechaFinal) {
+
+    const dia = fechaActual.getDay()
+
+    if (dia !== 0 && dia !== 6) {
+      diasClase++
+    }
+
+    fechaActual.setDate(fechaActual.getDate() + 1)
+  }
+
+  return diasClase
+}
+
+
 
 function vaciarAlumnos() {
     localStorage.removeItem("alumnos")
@@ -245,6 +374,7 @@ function vaciarAsistencias() {
     renderAlumnos()
     alert("Asistencias eliminadas")
 }
+
 renderAlumnos() /*Llama a la funcion renderAlumnos para mostrar la lista de alumnos al cargar la pagina */
 
 if ("serviceWorker" in navigator) {

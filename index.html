@@ -24,14 +24,18 @@
         <input type="date" id="inputFecha">
         <button id="diaSiguiente">▶</button> </div>
 
-        
+        <h2>Seleccionar grado</h2>
 
-        <div><h2>Seleccionar fecha para cacular faltas y asistencias</h2> desde
-        <input type="date" id="inputFechaInicio"></div> hasta <input type="date" id="inputFechaFin">
+        <select id="selectGrado"></select>
+        
+            <div>
+        <h3><span id="fechaSel">...</span> </h3>
+         </div>
+      
         
 
         <div><h2>Alumnos en el curso</h2>
-            <p>Lista Alumnos del <span id="fechaSel">...</span></p>
+
 
         <ul id="listaAlumnos" >
             <!-- Lista de alumnos se generara aqui -->
@@ -43,17 +47,24 @@
     <section>
         <h2>Ingresar alumno</h2>
         <div>
-            <label for="inputNombres">Nombres Alumno</label>
-            <input type="text" id="inputNombres">  <br>
+
 
             <label for="inputApellidos">Apellidos Alumno</label>
             <input type="text" id="inputApellidos"><br>
+
+            <label for="inputNombres">Nombres Alumno</label>
+            <input type="text" id="inputNombres">  <br>
 
             <button type="button" id="botonAgregar">Agregar</button>
         </div>
 
 
     <!--Aqui ingresara los alumnos y cada que seleccione agregar se mostrata en una lista en la parte alumnos de la seccion asistencia -->
+    </section>
+
+    <section>   
+          <div><h2>Seleccionar fecha para cacular faltas y asistencias</h2> desde
+        <input type="date" id="inputFechaInicio"> hasta <input type="date" id="inputFechaFin"></div>
     </section>
 
      <section>
