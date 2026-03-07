@@ -375,6 +375,28 @@ function vaciarAsistencias() {
     alert("Asistencias eliminadas")
 }
 
+function resetDatos(){ //Funcion para reiniciar todos los datos de alumnos y asistencias con una confirmacion y contraseña para evitar borrados accidentales
+
+  const password = prompt("Ingrese la contraseña para borrar los datos")
+
+  if(password === "0313"){   // aquí pones la contraseña
+
+    if(confirm("¿Seguro que deseas borrar todos los datos?")){
+
+      localStorage.clear()
+      location.reload()
+      alert("Datos reiniciados")
+
+    }
+
+  } else {
+
+    alert("Contraseña incorrecta")
+
+  }
+
+}
+
 renderAlumnos() /*Llama a la funcion renderAlumnos para mostrar la lista de alumnos al cargar la pagina */
 
 if ("serviceWorker" in navigator) {
