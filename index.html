@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#2d6cdf">
+    <title>My Amauta v0.3.0</title>
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="manifest" href="./manifest.json">
+    
+    
+</head>
+<body>
+    <div class="app" >
+        <!--   Inicio de la app  -->
+
+         <div id="fecha-span">
+        <h3><span id="fechaSel">...</span> </h3>
+        </div>
+    <div id="vista-inicio" class="card">
+    
+    <h1>My Amauta</h1>
+
+    
+
+     <button class="primary" onclick="irAGrados('asistencia')">
+    Tomar asistencia
+     </button>
+
+  <button class="secondary" onclick="irAGrados('notas')">
+    Ver notas
+  </button>
+</div>
+
+        <!--Parte Oculta de la app-->
+  <div id="vista-app" style="display:none">
+    
+        <div><button class="primary" onclick="volverInicio()">Volver al menú</button>
+        </div>
+
+        <div id="vista-grados" class="card" >
+        <h2>Seleccionar grado</h2>
+        <select id="selectGradoFiltro" ></select>
+        <button class="secondary" onclick="confirmarGrado()">Continuar</button>
+        </div>
+
+
+        <div class="asistencia" id="vista-asistencia" class="card" style="display:none">
+
+           
+
+        
+        <div id="sel-fecha">
+        <h2>Seleccionar Fecha</h2>
+
+        <button class="secondary" id="diaAnterior">◀</button>
+        <input type="date" id="inputFecha">
+        <button class="secondary" id="diaSiguiente">▶</button> 
+        </div>
+
+       <div>
+         <button class="primary" onclick="mostrarSubVista('vista-grados')">
+        Cambiar de Grado
+        </button>
+    
+        </div>
+
+        <div id="lista-alumnos">
+            <h2>Alumnos en el curso</h2> <h3><span id="gradoSel">...</span> </h3>
+
+
+        <ul id="listaAlumnos" >
+            <!-- Lista de alumnos se generara aqui -->
+        </ul></div>
+
+        <div id="total-alumnos">
+        <h4>Total Alumnos: <span id="totalAlumnos">0</span></h4>
+         <!--  Ver asistencias total de alumnos y asistencias asi como clases totales y faltantes-->
+        
+    </div>
+
+    <button class="secondary"  id="btnToggleForm" onclick="toggleForm()">➕ Agregar alumno</button>
+    <button class="secondary" id="btnCalculo" onclick="toggleCalculo()">📊 Rango de Fecha</button>
+         </div> 
+
+   
+
+
+    <div id="form-alumno" style="display: none;">
+        <h2 id="tituloForm">Ingresar alumno</h2>
+        <div>
+
+
+            <label for="inputApellidos">Apellidos del Alumno</label>
+            <input type="text" id="inputApellidos"><br>
+
+            <label for="inputNombres">Nombres del Alumno</label>
+            <input type="text" id="inputNombres">  <br>
+
+            <p>Grado del Alumno</p> <select id="selectGradoForm" size="4"> </select><br><br>
+
+
+            <button class="secondary" type="button" id="botonAgregar">Agregar</button>
+        </div>
+
+
+    <!--Aqui ingresara los alumnos y cada que seleccione agregar se mostrata en una lista en la parte alumnos de la seccion asistencia -->
+    </div>
+
+    <div id="calculo-fecha" style="display: none;">   
+          <div><h2>Seleccionar fecha para cacular faltas y asistencias</h2> desde
+        <input type="date" id="inputFechaInicio"> hasta <input type="date" id="inputFechaFin"></div>
+    </div>
+
+
+
+    
+</div>
+</div>
+
+<!--<button onclick="resetDatos()">Reiniciar datos</button>
+<button onclick="vaciarAlumnos()">Vaciar alumnos</button>
+<button onclick="vaciarAsistencias()">Vaciar asistencias</button>-->
+
+</body>
+    <script src="./js/data.js"></script>
+    <script src="./js/utils.js"></script>
+    <script src="./js/alumnos.js"></script>
+    <script src="./js/asistencia.js"></script>
+    <script src="./js/ui.js"></script>
+    <script src="./js/main.js"></script>
+
+</html>
